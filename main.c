@@ -20,7 +20,6 @@ int main()
 			char c;
 			while((c = getc(filePath)) != EOF)
 			{
-				putchar(c);
                 switch(c)
                 {
                     case '>':
@@ -38,11 +37,10 @@ int main()
                         Cells[CellPos]--;
                     break;
                     case '.':
-                        putchar(Cells[CellPos]);
+                        printf("%c", (Cells[CellPos]));
                     break;
                     case ',':
                         Cells[CellPos] = getchar();
-                        putchar(Cells[CellPos]);
                     break;
                     case '[':
                     break;
