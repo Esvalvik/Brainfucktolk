@@ -94,5 +94,6 @@
   </Settings>
   <VirtualDirectory Name="src">
     <File Name="main.c"/>
+    <File Name="test.bf"/>
   </VirtualDirectory>
 </CodeLite_Project>
