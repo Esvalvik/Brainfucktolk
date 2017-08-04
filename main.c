@@ -2,56 +2,66 @@
 
 FILE *filePath;
 
-int Cells[256];
+char Cells[256] = { 0 };
 int CellPos = 0;
+
+void logic(char c);
+void printCells();
 int main()
 {   
-    for(int i = 0; i < sizeof(Cells); i++)
-    {
-        Cells[i] = 0;
-    }
-	char fileName[64];
-	if(fgets(fileName, sizeof(fileName), stdin))
+	filePath = fopen("D:/Prosjekter/C/Brainfucktolk/test.bf", "r");
+	if(filePath)
 	{
-		printf("Du skrev %s", fileName );
-		filePath = fopen("D:/Prosjekter/C/Brainfucktolk/test.bf", "r");
-		if(filePath)
+		char c;
+		while((c = getc(filePath)) != EOF)
 		{
-			char c;
-			while((c = getc(filePath)) != EOF)
+		   logic(c);
+		}
+	}
+	else
+		puts("Ingen fil å lese yo");
+	fclose(filePath);
+
+	printCells();
+	return 0;
+}
+
+void logic(char c)
+{
+    switch(c)
+    {
+		case '>':
+			if((CellPos + 1) < 254)
+				CellPos++;
+		break;
+		case '<':
+			if((CellPos - 1) >= 0)
+				CellPos--;
+		break;
+		case '+': Cells[CellPos]++; break;
+		case '-': Cells[CellPos]--; break;
+		case '.':
+			printf("%c", (Cells[CellPos]));
+		break;
+		case ',':
+		{
+			int inChar;
+			while ((inChar = getchar()) != EOF && inChar != '\n')
 			{
-                switch(c)
-                {
-                    case '>':
-                        if((CellPos + 1) < 254)
-                            CellPos++;
-                    break;
-                    case '<':
-                        if((CellPos - 1) >= 0)
-                            CellPos--;
-                    break;
-                    case '+':
-                        Cells[CellPos]++;
-                    break;
-                    case '-':
-                        Cells[CellPos]--;
-                    break;
-                    case '.':
-                        printf("%c", (Cells[CellPos]));
-                    break;
-                    case ',':
-                        Cells[CellPos] = getchar();
-                    break;
-                    case '[':
-                    break;
-                    case ']':
-                    break;
-                }
+				Cells[CellPos] = inChar;
 			}
 		}
-		else
-			puts("Ingen fil å lese yo");
-		fclose(filePath);
+		break;
+		case '[':
+		break;
+		case ']':
+		break;
 	}
-	return 0;
+}	
+void printCells()
+{
+	for(int i = 0; i < sizeof(Cells); i++)
+	{
+		printf("[%d]", Cells[i]);
+	}
 }
